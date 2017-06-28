@@ -12,7 +12,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:scrollbars="vertical" />
+        android:scrollbars="vertical"
+        tools:listitem="@layout/item_weather" />
 
     <Button
         android:id="@+id/am_bt_delete"
@@ -22,7 +23,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:padding="5dp"
-        android:text="Del" />
+        android:text="@string/button_delete_text" />
 
     <Button
         android:id="@+id/am_bt_reverse"
@@ -33,7 +34,7 @@
         android:layout_marginRight="5dp"
         android:layout_toRightOf="@+id/am_bt_delete"
         android:padding="5dp"
-        android:text="Reverse" />
+        android:text="@string/button_reverse_text" />
 
     <Button
         android:id="@+id/am_bt_sort"
@@ -44,7 +45,7 @@
         android:layout_marginRight="5dp"
         android:layout_toRightOf="@+id/am_bt_reverse"
         android:padding="5dp"
-        android:text="Sort" />
+        android:text="@string/button_sort_text" />
 
     <Button
         android:id="@+id/am_bt_add"
@@ -55,7 +56,7 @@
         android:layout_marginRight="5dp"
         android:layout_toRightOf="@id/am_bt_sort"
         android:padding="5dp"
-        android:text="Add" />
+        android:text="@string/button_add_text" />
 
 
 </RelativeLayout>
