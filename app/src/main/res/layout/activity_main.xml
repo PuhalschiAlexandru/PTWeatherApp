@@ -58,5 +58,4 @@
         android:padding="5dp"
         android:text="@string/button_add_text" />
 
-
 </RelativeLayout>

@@ -16,5 +16,4 @@ public class ColorUtils {
 
         return Color.rgb((int) r, (int) g, (int) b);
     }
-
 }

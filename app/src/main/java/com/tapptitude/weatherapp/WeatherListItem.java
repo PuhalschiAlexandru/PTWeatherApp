@@ -14,14 +14,6 @@ public class WeatherListItem {
         this.number = number;
     }
 
-    public void setTitle(String newTitle) {
-        title = newTitle;
-    }
-
-    public void setNumber(int newNumber) {
-        number = newNumber;
-    }
-
     public String getTitle() {
         return title;
     }

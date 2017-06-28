@@ -7,9 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import static Utils.ColorUtils.blendColors;
 
@@ -18,7 +19,7 @@ import static Utils.ColorUtils.blendColors;
  */
 
 public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.ViewHolder> {
-    private List<WeatherListItem> weatherListItemList = new ArrayList<>();
+    private List<WeatherListItem> mWeatherListItemList;
 
     private static final int TEXT_INITIAL_COLOR = Color.rgb(14, 126, 250);
     private static final int TEXT_FINAL_COLOR = Color.rgb(6, 188, 255);
@@ -26,8 +27,8 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     private static final int NUMBER_FINAL_COLOR = Color.rgb(43, 198, 255);
 
 
-    public WeatherListAdapter(List<WeatherListItem> weatherListItemList) {
-        this.weatherListItemList = weatherListItemList;
+    public WeatherListAdapter(List<WeatherListItem> mWeatherListItemList) {
+        this.mWeatherListItemList = mWeatherListItemList;
     }
 
     @Override
@@ -39,25 +40,26 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
 
     @Override
     public void onBindViewHolder(WeatherListAdapter.ViewHolder holder, int position) {
-        holder.titleTV.setBackgroundColor(blendColors(TEXT_INITIAL_COLOR, TEXT_FINAL_COLOR, getBlendRatioForPosition(position)));
-        holder.numberTV.setBackgroundColor(blendColors(NUMBER_INITIAL_COLOR, NUMBER_FINAL_COLOR, getBlendRatioForPosition(position)));
-        holder.titleTV.setText(weatherListItemList.get(position).getTitle());
-        holder.numberTV.setText(String.valueOf(weatherListItemList.get(position).getNumber()));
+        holder.mTitleTV.setBackgroundColor(blendColors(TEXT_INITIAL_COLOR, TEXT_FINAL_COLOR, getBlendRatioForPosition(position)));
+        holder.mNumberTV.setBackgroundColor(blendColors(NUMBER_INITIAL_COLOR, NUMBER_FINAL_COLOR, getBlendRatioForPosition(position)));
+        holder.mTitleTV.setText(mWeatherListItemList.get(position).getTitle());
+        holder.mNumberTV.setText(String.valueOf(mWeatherListItemList.get(position).getNumber()));
     }
 
     @Override
     public int getItemCount() {
-        return weatherListItemList == null ? 0 : weatherListItemList.size();
+        return mWeatherListItemList == null ? 0 : mWeatherListItemList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView titleTV;
-        TextView numberTV;
+        @BindView(R.id.il_tv_title)
+        TextView mTitleTV;
+        @BindView(R.id.il_tv_number)
+        TextView mNumberTV;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            this.titleTV = itemView.findViewById(R.id.il_tv_title);
-            this.numberTV = itemView.findViewById(R.id.il_tv_number);
+            ButterKnife.bind(this, itemView);
         }
     }
 
