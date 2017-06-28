@@ -9,7 +9,9 @@ import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private LinearLayoutManager mLayoutManager;
     boolean mReverseState = true;
+    boolean mSortState = false;
+
     List<WeatherListItem> weatherListItemList = new ArrayList<>();
 
     Button mDeleteButton;
@@ -86,14 +90,39 @@ public class MainActivity extends AppCompatActivity {
         View.OnClickListener sortButtonOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
+                if (!mSortState) {
+                    compareListByTitle(weatherListItemList);
+                    mAdapter.notifyDataSetChanged();
+                    mSortState = true;
+                } else {
+                    compareListByNumber(weatherListItemList);
+                    mAdapter.notifyDataSetChanged();
+                    mSortState = false;
+                }
             }
         };
 
         mDeleteButton.setOnClickListener(deleteButtonClickListener);
         mAddButton.setOnClickListener(addButtonClickListener);
         mReverseButton.setOnClickListener(reverseButtonOnClickListener);
+        mSortButton.setOnClickListener(sortButtonOnClickListener);
     }
 
+    private void compareListByTitle(List<WeatherListItem> listToSort) {
+        Collections.sort(listToSort, new Comparator<WeatherListItem>() {
+            @Override
+            public int compare(WeatherListItem weatherListItem, WeatherListItem t1) {
+                return weatherListItem.getTitle().compareToIgnoreCase(t1.getTitle());
+            }
+        });
+    }
+
+    private void compareListByNumber(List<WeatherListItem> listToSort) {
+        Collections.sort(listToSort, new Comparator<WeatherListItem>() {
+            @Override
+            public int compare(WeatherListItem weatherListItem, WeatherListItem t1) {
+                return weatherListItem.getNumber() - (t1.getNumber());
+            }
+        });
+    }
 }
