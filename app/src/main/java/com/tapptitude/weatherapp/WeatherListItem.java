@@ -1,5 +1,7 @@
 package com.tapptitude.weatherapp;
 
+import android.support.annotation.NonNull;
+
 /**
  * Created by alexpuhalschi on 27/06/2017.
  */
@@ -28,4 +30,5 @@ public class WeatherListItem {
     public int getNumber() {
         return number;
     }
+    
 }

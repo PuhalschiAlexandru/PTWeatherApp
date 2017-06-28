@@ -8,16 +8,21 @@ import android.view.View;
 import android.widget.Button;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
+    private LinearLayoutManager mLayoutManager;
+    boolean mReverseState = true;
     List<WeatherListItem> weatherListItemList = new ArrayList<>();
 
     Button mDeleteButton;
     Button mAddButton;
+    Button mReverseButton;
+    Button mSortButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void initRV() {
         mRecyclerView = (RecyclerView) findViewById(R.id.am_rv_main_view);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
         mAdapter = new WeatherListAdapter(getTestData());
         mRecyclerView.setAdapter(mAdapter);
@@ -47,27 +53,47 @@ public class MainActivity extends AppCompatActivity {
 
     public void initializeButton() {
         mDeleteButton = (Button) findViewById(R.id.am_bt_delete);
-        mAddButton = (Button) findViewById(R.id.al_bt_add);
+        mAddButton = (Button) findViewById(R.id.am_bt_add);
+        mReverseButton = (Button) findViewById(R.id.am_bt_reverse);
+        mSortButton = (Button) findViewById(R.id.am_bt_sort);
 
         View.OnClickListener deleteButtonClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                weatherListItemList.remove(weatherListItemList.size()-1);
-                mAdapter.notifyItemRemoved(weatherListItemList.size());
-
+                weatherListItemList.remove(weatherListItemList.size() - 1);
+                mAdapter.notifyDataSetChanged();
             }
         };
 
         View.OnClickListener addButtonClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                weatherListItemList.add(0,WeatherListItemFactory.getWeatherListItem());
+                weatherListItemList.add(0, WeatherListItemFactory.getWeatherListItem());
                 mAdapter.notifyDataSetChanged();
+            }
+        };
+        View.OnClickListener reverseButtonOnClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mLayoutManager.setReverseLayout(mReverseState);
+                if (mReverseState) {
+                    mReverseState = false;
+                } else {
+                    mReverseState = true;
+                }
+            }
+        };
+        View.OnClickListener sortButtonOnClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
             }
         };
 
         mDeleteButton.setOnClickListener(deleteButtonClickListener);
         mAddButton.setOnClickListener(addButtonClickListener);
+        mReverseButton.setOnClickListener(reverseButtonOnClickListener);
     }
 
 }
