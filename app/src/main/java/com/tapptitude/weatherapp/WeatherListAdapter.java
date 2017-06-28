@@ -1,6 +1,7 @@
 package com.tapptitude.weatherapp;
 
-import android.graphics.Color;
+import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,16 +20,23 @@ import static Utils.ColorUtils.blendColors;
  */
 
 public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.ViewHolder> {
+    private final int mTitleEndColor;
+    private final int mNumberStartColor;
+    private final int mNumberEndColor;
+    private final int mTitleStartColor;
+
     private List<WeatherListItem> mWeatherListItemList;
 
-    private static final int TEXT_INITIAL_COLOR = Color.rgb(14, 126, 250);
-    private static final int TEXT_FINAL_COLOR = Color.rgb(6, 188, 255);
-    private static final int NUMBER_INITIAL_COLOR = Color.rgb(55, 145, 255);
-    private static final int NUMBER_FINAL_COLOR = Color.rgb(43, 198, 255);
+    private Context mContext;
 
-
-    public WeatherListAdapter(List<WeatherListItem> mWeatherListItemList) {
+    public WeatherListAdapter(Context context, List<WeatherListItem> mWeatherListItemList) {
         this.mWeatherListItemList = mWeatherListItemList;
+        mContext = context;
+
+        mTitleStartColor = ContextCompat.getColor(context, R.color.initial_text_gradient_color);
+        mTitleEndColor = ContextCompat.getColor(context, R.color.final_text_gradient_color);
+        mNumberStartColor = ContextCompat.getColor(context, R.color.initial_number_gradient_color);
+        mNumberEndColor = ContextCompat.getColor(context, R.color.final_number_gradient_color);
     }
 
     @Override
@@ -40,8 +48,8 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
 
     @Override
     public void onBindViewHolder(WeatherListAdapter.ViewHolder holder, int position) {
-        holder.mTitleTV.setBackgroundColor(blendColors(TEXT_INITIAL_COLOR, TEXT_FINAL_COLOR, getBlendRatioForPosition(position)));
-        holder.mNumberTV.setBackgroundColor(blendColors(NUMBER_INITIAL_COLOR, NUMBER_FINAL_COLOR, getBlendRatioForPosition(position)));
+        holder.mTitleTV.setBackgroundColor(blendColors(mTitleStartColor, mTitleEndColor, getBlendRatioForPosition(position)));
+        holder.mNumberTV.setBackgroundColor(blendColors(mNumberStartColor, mNumberEndColor, getBlendRatioForPosition(position)));
         holder.mTitleTV.setText(mWeatherListItemList.get(position).getTitle());
         holder.mNumberTV.setText(String.valueOf(mWeatherListItemList.get(position).getNumber()));
     }
